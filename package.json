@@ -12,7 +12,7 @@
         "type-check": "vue-tsc --build",
         "lint": "eslint . --fix",
         "format": "prettier --write .",
-        "lexgen": "lex gen-api ./src/lexicon/generated ./src/lexicon/definitions/* && ./lexgen-fix.sh"
+        "lexgen": "lex gen-api --yes ./src/lexicon/generated ./src/lexicon/definitions/* && ./lexgen-fix.sh"
     },
     "devDependencies": {
         "@atproto/api": "^0.13.30",
