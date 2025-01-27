@@ -11,11 +11,15 @@
         "build-only": "vite build",
         "type-check": "vue-tsc --build",
         "lint": "eslint . --fix",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "lexgen": "lex gen-api ./src/lexicon/generated ./src/lexicon/definitions/* && ./lexgen-fix.sh"
     },
     "devDependencies": {
         "@atproto/api": "^0.13.30",
+        "@atproto/lex-cli": "^0.5.6",
+        "@atproto/lexicon": "^0.4.5",
         "@atproto/oauth-client-browser": "^0.3.7",
+        "@atproto/xrpc": "^0.6.6",
         "@heroicons/vue": "^2.2.0",
         "@tailwindcss/typography": "^0.5.16",
         "@tailwindcss/vite": "^4.0.0",
@@ -32,6 +36,7 @@
         "eslint-plugin-vue": "^9.32.0",
         "jiti": "^2.4.2",
         "monaco-editor": "^0.52.2",
+        "multiformats": "^13.3.1",
         "npm-run-all2": "^7.0.2",
         "prettier": "^3.4.2",
         "tailwindcss": "^4.0.0",
@@ -40,6 +45,7 @@
         "vite-plugin-vue-devtools": "^7.7.0",
         "vue": "^3.5.13",
         "vue-router": "^4.5.0",
-        "vue-tsc": "^2.2.0"
+        "vue-tsc": "^2.2.0",
+        "zod": "^3.24.1"
     }
 }

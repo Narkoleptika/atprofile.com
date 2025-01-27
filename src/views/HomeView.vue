@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import HandleSearch from '@/components/HandleSearch.vue'
 import IconAtProfile from '@/components/IconAtProfile.vue'
+import { ExclamationTriangleIcon } from '@heroicons/vue/24/solid'
 </script>
 <template>
     <main class="p-2">
         <div class="prose text-center m-auto">
+            <div role="alert" class="alert alert-warning mb-2">
+                <ExclamationTriangleIcon class="h-6 w-6 shrink-0 fill-current" />
+                <span>AT Profile is in beta and things will probably break :)</span>
+            </div>
             <IconAtProfile class="fill-(--tw-prose-headings) w-30 inline-block" />
             <h1 class="mb-2">AT Profile</h1>
             <h2 class="mt-0">Custom profiles built on top of AT Protocol</h2>

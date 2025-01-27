@@ -54,7 +54,7 @@ import IconGithub from '@/components/IconGithub.vue'
     <RouterView class="flex-1" />
     <footer class="footer bg-neutral text-neutral-content place-items-center p-2">
         <nav class="grid-flow-col gap-4">
-            <a target="_blank" href="https://github.com/atprofile/atprofile.com">
+            <a target="_blank" href="https://github.com/Narkoleptika/atprofile.com">
                 <IconGithub class="fill-current w-6" />
             </a>
             <a target="_blank" href="https://bsky.app/profile/atprofile.com">

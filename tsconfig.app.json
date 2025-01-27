@@ -4,6 +4,8 @@
     "exclude": ["src/**/__tests__/*"],
     "compilerOptions": {
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+        // Remove after https://github.com/bluesky-social/atproto/pull/3282 merges
+        "verbatimModuleSyntax": false,
 
         "paths": {
             "@/*": ["./src/*"]

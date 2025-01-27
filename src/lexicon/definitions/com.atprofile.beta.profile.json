@@ -1,0 +1,31 @@
+{
+    "lexicon": 1,
+    "id": "com.atprofile.beta.profile",
+    "defs": {
+        "main": {
+            "type": "record",
+            "key": "self",
+            "record": {
+                "type": "object",
+                "required": ["content"],
+                "properties": {
+                    "content": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500000
+                    },
+                    "replaceTokens": {
+                        "type": "boolean"
+                    },
+                    "newlinesToLinebreaks": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                }
+            }
+        }
+    }
+}

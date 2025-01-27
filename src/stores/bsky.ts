@@ -1,15 +1,24 @@
-import { agent } from '@/stores/agent'
+import { getUserAgent } from '@/stores/agent'
 import { ref, watch } from 'vue'
 import { isLoggedIn, oathSession } from '@/stores/auth'
 
-export const resolveHandle = async (handle: string) => (await agent.value.resolveHandle({ handle })).data.did
+export const resolveHandle = async (handle: string) => {
+    const agent = await getUserAgent()
+    const {
+        data: { did },
+    } = await agent.resolveHandle({ handle })
 
-export const getProfile = async (did: string) =>
-    (
-        await agent.value.getProfile({
-            actor: did,
-        })
-    ).data
+    return did
+}
+
+export const getProfile = async (did: string) => {
+    const agent = await getUserAgent()
+    const { data } = await agent.getProfile({
+        actor: did,
+    })
+
+    return data
+}
 
 const getUserProfile = async () => {
     if (!oathSession.value) {

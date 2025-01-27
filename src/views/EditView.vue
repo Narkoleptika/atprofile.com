@@ -4,41 +4,66 @@ import { Cog6ToothIcon } from '@heroicons/vue/24/solid'
 import ProfileRenderer from '@/components/ProfileRenderer.vue'
 import { userProfile } from '@/stores/bsky'
 import settings from '@/stores/settings'
-import { computed, ref } from 'vue'
-import defaultProfile from '@/assets/text/default-profile.txt?raw'
+import { computed } from 'vue'
 import { TrashIcon, ArrowDownTrayIcon } from '@heroicons/vue/24/solid'
+import { userAtProfile, putAtProfile } from '@/stores/atprofile'
+import AtProfile from '@/models/atprofile'
 
-const shouldReplaceTokens = ref(true)
-const newlinesToLinebreaks = ref(false)
-const editorContent = computed({
-    get: () => settings.editorContent || defaultProfile,
+const contentModified = computed(() => settings.content && settings.content !== userAtProfile.value.content)
+const replaceTokensModified = computed(() => settings.replaceTokens !== userAtProfile.value.replaceTokens)
+const newlinesToLinebreaksModified = computed(
+    () => settings.newlinesToLinebreaks !== userAtProfile.value.newlinesToLinebreaks,
+)
+const modified = computed(
+    () => contentModified.value || replaceTokensModified.value || newlinesToLinebreaksModified.value,
+)
+
+const content = computed({
+    get: () => (contentModified.value ? settings.content : userAtProfile.value.content),
     set: (value) => {
-        if (value === defaultProfile) {
-            settings.editorContent = ''
-
-            return
-        }
-        settings.editorContent = value
+        settings.content = value
     },
 })
+const replaceTokens = computed({
+    get: () => (replaceTokensModified.value ? settings.replaceTokens : userAtProfile.value.replaceTokens),
+    set: (value) => {
+        settings.replaceTokens = value
+    },
+})
+const newlinesToLinebreaks = computed({
+    get: () =>
+        newlinesToLinebreaksModified.value ? settings.newlinesToLinebreaks : userAtProfile.value.newlinesToLinebreaks,
+    set: (value) => {
+        settings.newlinesToLinebreaks = value
+    },
+})
+
+const updatedAtProfile = computed(() =>
+    AtProfile.parse({
+        content: content.value,
+        replaceTokens: replaceTokens.value,
+        newlinesToLinebreaks: newlinesToLinebreaks.value,
+        createdAt: userAtProfile.value.createdAt,
+    }),
+)
+
+const reset = () => {
+    settings.content = userAtProfile.value.content
+    settings.replaceTokens = userAtProfile.value.replaceTokens
+    settings.newlinesToLinebreaks = userAtProfile.value.newlinesToLinebreaks
+}
+
+const save = () => putAtProfile(updatedAtProfile.value)
 </script>
 <template>
     <main class="flex flex-col">
         <div class="flex-1 flex flex-col md:flex-row">
             <div class="flex flex-1 h-[50%] md:h-auto md:flex-none md:w-[50%] lg:w-[40%] relative order-1 md:order-0">
                 <div class="absolute top-0 right-0 z-50 flex gap-2 p-2">
-                    <button
-                        v-if="settings.editorContent"
-                        @click="settings.editorContent = ''"
-                        class="btn btn-circle btn-error"
-                    >
+                    <button v-if="modified" @click="reset" class="btn btn-circle btn-error">
                         <TrashIcon class="fill-current w-6" />
                     </button>
-                    <button
-                        v-if="settings.editorContent"
-                        @click="settings.editorContent = ''"
-                        class="btn btn-circle btn-success"
-                    >
+                    <button v-if="modified" @click="save" class="btn btn-circle btn-success">
                         <ArrowDownTrayIcon class="fill-current w-6" />
                     </button>
                     <div class="dropdown dropdown-end">
@@ -51,7 +76,7 @@ const editorContent = computed({
                         >
                             <legend class="fieldset-legend">Options</legend>
                             <label class="fieldset-label">
-                                <input type="checkbox" v-model="shouldReplaceTokens" class="toggle" />
+                                <input type="checkbox" v-model="replaceTokens" class="toggle" />
                                 Replace tokens
                             </label>
                             <label class="fieldset-label">
@@ -70,15 +95,13 @@ const editorContent = computed({
                         </fieldset>
                     </div>
                 </div>
-                <CodeEditor class="w-full" language="html" v-model="editorContent" />
+                <CodeEditor class="w-full" language="html" v-model="content" />
             </div>
             <ProfileRenderer
                 v-if="userProfile"
                 class="flex-1 h-[50%] md:h-auto md:w-[50%] lg:w-[60%]"
-                :content="editorContent"
-                :handle="userProfile.handle"
-                :should-replace-tokens="shouldReplaceTokens"
-                :newlines-to-linebreaks="newlinesToLinebreaks"
+                :profile="userProfile"
+                :at-profile="updatedAtProfile"
             />
         </div>
     </main>

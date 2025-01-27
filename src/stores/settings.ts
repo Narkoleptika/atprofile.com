@@ -11,7 +11,9 @@ try {
 export const settings = reactive({
     overrideTheme: savedSettings.overrideTheme === true,
     codeTheme: String(savedSettings.codeTheme || ''),
-    editorContent: String(savedSettings.editorContent || ''),
+    content: String(savedSettings.content || ''),
+    replaceTokens: savedSettings.replaceTokens !== false,
+    newlinesToLinebreaks: savedSettings.newlinesToLinebreaks === true,
 })
 
 export default settings

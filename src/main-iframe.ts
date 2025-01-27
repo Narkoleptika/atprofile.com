@@ -68,7 +68,7 @@ window.addEventListener('message', (event) => {
         }
 
         const transforms: Array<[boolean, (html: string) => string]> = [
-            [Boolean(window.context.shouldReplaceTokens), replaceTokens],
+            [Boolean(window.context.replaceTokens), replaceTokens],
             [Boolean(window.context.newlinesToLinebreaks), newlinesToLinebreaks],
         ]
 

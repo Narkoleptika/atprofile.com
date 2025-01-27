@@ -10,6 +10,7 @@
         --base-content: var(--black);
         --primary: var(--french-pass);
         --primary-content: var(--outer-space);
+        --cursor: var(--white);
     }
     @media (prefers-color-scheme: dark) {
         :root {
@@ -44,9 +45,9 @@
         width: 100px;
         pointer-events: none;
         position: fixed;
-        background: #fff;
+        background: var(--cursor);
         border-radius: 100%;
-        box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 70px #fff, 0 0 80px #fff, 0 0 100px #fff, 0 0 150px #fff;
+        box-shadow: 0 0 10px var(--cursor), 0 0 20px var(--cursor), 0 0 30px var(--cursor), 0 0 40px var(--cursor), 0 0 70px var(--cursor), 0 0 80px var(--cursor), 0 0 100px var(--cursor), 0 0 150px var(--cursor);
         z-index: 100;
     }
 
