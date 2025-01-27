@@ -1,0 +1,173 @@
+<style>
+    :root {
+        --white: #fafafa;
+        --black: #212121;
+        --french-pass: #B8E6FE;
+        --outer-space: #21292E;
+        --orient: #00598A;
+        --twilight-blue: #F8FDFF;
+        --base: var(--white);
+        --base-content: var(--black);
+        --primary: var(--french-pass);
+        --primary-content: var(--outer-space);
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --base: var(--black);
+            --base-content: var(--white);
+            --primary: var(--orient);
+            --primary-content: var(--twilight-blue);
+        }
+    }
+    *,*::before,*::after {
+        box-sizing: border-box;
+        cursor: none;
+    }
+    body {
+        background-color: var(--primary);
+        color: var(--primary-content);
+        margin: 0;
+    }
+
+    main {
+        display: grid;
+        place-items: center;
+        min-height: 100dvh;
+        margin: 0 1rem;
+
+        @media screen and (min-width: calc(600px + 2rem + 1px)) {
+            margin: 0 auto;
+        }
+    }
+    #cursor {
+        height: 100px;
+        width: 100px;
+        pointer-events: none;
+        position: fixed;
+        background: #fff;
+        border-radius: 100%;
+        box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 70px #fff, 0 0 80px #fff, 0 0 100px #fff, 0 0 150px #fff;
+        z-index: 100;
+    }
+
+    #cloud {
+        position: relative;
+        background-color: var(--white);
+        color: var(--black);
+        width: 100%;
+        max-width: 600px;
+        border-radius: 100px;
+        padding: 25px 50px;
+        box-shadow: 10px 10px color-mix(in srgb, var(--black), transparent 80%);
+
+        &::after,
+        &::before {
+            content:"";
+            position: absolute;
+            background:inherit;
+            border-radius:100%;
+            z-index: -1;
+        }
+
+        &::after{
+            width: 30%;
+            aspect-ratio: 1;
+            top: -35%;
+            left: 15%;
+        }
+        &::before{
+            width: 45%;
+            aspect-ratio: 1;
+            top: -50%;
+            left: 40%;
+        }
+
+        @media screen and (min-width: 550px) {
+            &::after{
+                width: 28%;
+                top: -45%;
+            }
+            &::before{
+                width: 45%;
+                top: -75%;
+            }
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0;
+            color: var(--black);
+            text-decoration: none;
+            transition: color 250ms;
+
+            .avatar {
+                width: 100px;
+                height: auto;
+                display: block;
+                border-radius: 100%;
+                border: 5px solid transparent;
+                margin-right: 1rem;
+                transition: border-color 250ms;
+            }
+
+            &:hover {
+                color: var(--primary);
+
+                .avatar {
+                    border-color: var(--primary);
+                }
+            }
+
+            .text {
+                flex: 1;
+                max-height: 100px;
+                overflow: auto;
+
+                @media screen and (min-width: 768px) {
+                    max-height: 120px;
+                }
+            }
+            .title {
+                margin: 0;
+            }
+            .description {
+                white-space: pre-line;
+            }
+        }
+
+    }
+</style>
+<div id="cursor"></div>
+<script type="module">
+    const cursor = document.querySelector('#cursor')
+    const radius = cursor.offsetHeight / 2
+
+    document.addEventListener('mousemove', event => {
+        const top = event.clientY - radius
+        const left = event.clientX - radius
+
+        cursor.style = `top: ${top}px; left: ${left}px`
+    })
+</script>
+<main>
+    <div id="cloud">
+        <a href="https://bsky.app/profile/{{profile.did}}" class="content">
+            <img class="avatar" src="{{profile.avatar}}">
+            <div class="text">
+                <h1 class="title">
+                    {{if profile.displayName}}
+                        {{profile.displayName}}
+                    {{/if}}
+                    {{unless profile.displayName}}
+                        {{profile.handle}}
+                    {{/unless}}
+                </h1>
+                {{if profile.description}}
+                    <div class="description">{{profile.description}}</div>
+                {{/if}}
+            </div>
+        </a>
+    </div>
+</main>
