@@ -1,4 +1,5 @@
 const isScriptNode = (node: Element): node is HTMLScriptElement => node.tagName === 'SCRIPT'
+const isStyleNode = (node: Element): node is HTMLStyleElement => node.tagName === 'STYLE'
 const cloneScriptNode = (node: HTMLScriptElement) => {
     const script = document.createElement('script')
 
@@ -14,6 +15,8 @@ const replaceScriptNode = (node: Element) => {
     if (isScriptNode(node)) {
         node.innerHTML = node.innerHTML.replace(/<br>/g, '')
         node.parentNode?.replaceChild(cloneScriptNode(node), node)
+    } else if (isStyleNode(node)) {
+        node.innerHTML = node.innerHTML.replace(/<br>/g, '')
     } else {
         Array.from(node.children).forEach((child) => {
             replaceScriptNode(child)
