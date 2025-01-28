@@ -2,7 +2,7 @@
     "client_id": "https://atprofile.com/client-metadata.json",
     "client_name": "AT Profile",
     "client_uri": "https://atprofile.com",
-    "logo_uri": "https://atprofile.com/logo.svg",
+    "logo_uri": "https://atprofile.com/logo.png",
     "redirect_uris": ["https://atprofile.com/"],
     "scope": "atproto transition:generic",
     "grant_types": ["authorization_code", "refresh_token"],

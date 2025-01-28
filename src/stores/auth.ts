@@ -32,12 +32,9 @@ export const isLoggedIn = computed(() => Boolean(oathSession.value))
 
 export const login = async (handle: string) => {
     try {
-        await client.signIn(handle, {
-            prompt: 'none',
-        })
+        await client.signIn(handle)
     } catch (error) {
         console.error(error)
-        await client.signIn(handle)
     }
 }
 
