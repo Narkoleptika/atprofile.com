@@ -43,13 +43,9 @@ const getPds = async (did: string) => {
     }
 }
 
-const agent = ref(await initAgent())
+export const agent = ref(await initAgent())
 
-export const getUserAgent = async (did?: string) => {
-    if (isLoggedIn.value || !did) {
-        return agent.value
-    }
-
+export const getPdsAgent = async (did: string) => {
     const pds = await getPds(did)
 
     if (!pds) {

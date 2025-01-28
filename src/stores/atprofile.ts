@@ -1,5 +1,5 @@
 import AtProfile from '@/models/atprofile'
-import { getUserAgent } from '@/stores/agent'
+import { agent, getPdsAgent } from '@/stores/agent'
 import { ref, watch } from 'vue'
 import defaultContent from '@/assets/text/default-profile.txt?raw'
 import { isLoggedIn, oathSession } from '@/stores/auth'
@@ -10,8 +10,8 @@ const defaultAtProfile = AtProfile.parse({
 
 export const getAtProfile = async (did: string) => {
     try {
-        const agent = await getUserAgent(did)
-        const { data } = await agent.com.atproto.repo.getRecord({
+        const pdsAgent = await getPdsAgent(did)
+        const { data } = await pdsAgent.com.atproto.repo.getRecord({
             repo: did,
             collection: defaultAtProfile.$type,
             rkey: 'self',
@@ -40,10 +40,8 @@ watch(isLoggedIn, async () => {
 })
 
 export const putAtProfile = async (atp: AtProfile) => {
-    const agent = await getUserAgent()
-
-    await agent.com.atproto.repo.putRecord({
-        repo: agent.assertDid,
+    await agent.value.com.atproto.repo.putRecord({
+        repo: agent.value.assertDid,
         collection: defaultAtProfile.$type,
         rkey: 'self',
         record: atp,
