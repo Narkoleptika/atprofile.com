@@ -8,7 +8,11 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/solid'
         <div class="prose text-center m-auto">
             <div role="alert" class="alert alert-warning mb-2">
                 <ExclamationTriangleIcon class="h-6 w-6 shrink-0 fill-current" />
-                <span>AT Profile is in beta and things will probably break :)</span>
+                <span>
+                    AT Profile is in beta and things are likely to change and break. Features may change without
+                    warning. If you make any cool stuff, please keep in mind that it may get lost or need to be migrated
+                    later.
+                </span>
             </div>
             <IconAtProfile class="fill-(--tw-prose-headings) w-30 inline-block" />
             <h1 class="mb-2">AT Profile</h1>
