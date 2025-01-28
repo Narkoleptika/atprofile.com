@@ -26,6 +26,11 @@ const router = createRouter({
             component: () => import('@/views/ProfileView.vue'),
         },
         {
+            path: '/lexicon',
+            name: 'lexicon',
+            component: () => import('@/views/LexiconView.vue'),
+        },
+        {
             path: '/login',
             name: 'login',
             component: () => import('@/views/LoginView.vue'),

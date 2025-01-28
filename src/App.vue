@@ -43,9 +43,10 @@ import IconGithub from '@/components/IconGithub.vue'
                     >
                         Profile
                     </RouterLink>
-                    <RouterLink active-class="menu-active" :to="{ name: 'edit' }"> Edit Profile </RouterLink>
+                    <RouterLink active-class="menu-active" :to="{ name: 'edit' }">Edit Profile</RouterLink>
                 </li>
                 <li v-if="!isLoggedIn"><RouterLink to="/login">Login</RouterLink></li>
+                <li><RouterLink active-class="menu-active" :to="{ name: 'lexicon' }">Lexicon</RouterLink></li>
                 <li><ThemeOverride v-model="settings.overrideTheme" /></li>
                 <li v-if="isLoggedIn"><RouterLink to="/" @click="logout">Logout</RouterLink></li>
             </ul>
