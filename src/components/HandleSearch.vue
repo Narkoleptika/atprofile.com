@@ -5,22 +5,14 @@ import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 
 const router = useRouter()
 const route = useRoute()
-const handleInput = ref('')
-const handle = computed({
-    get: () => {
-        if (handleInput.value) {
-            return handleInput.value
-        }
+const isFocused = ref(false)
+const handle = ref('')
+const routeHandle = computed(() => {
+    if (Array.isArray(route.params.handle)) {
+        return route.params.handle[0]
+    }
 
-        if (Array.isArray(route.params.handle)) {
-            return route.params.handle[0]
-        }
-
-        return route.params.handle
-    },
-    set: (value) => {
-        handleInput.value = value
-    },
+    return route.params.handle
 })
 const submit = () => {
     router.push({ name: 'profile', params: { handle: handle.value } })
@@ -33,8 +25,10 @@ const submit = () => {
             class="join-item input w-full"
             type="search"
             name="handle"
+            @focus="isFocused = true"
+            @blur="isFocused = false"
             v-model="handle"
-            placeholder="handle.bsky.social"
+            :placeholder="routeHandle || 'handle.bsky.social'"
             required
         />
 
