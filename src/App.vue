@@ -61,10 +61,10 @@ useHead({
     <footer class="footer bg-neutral text-neutral-content place-items-center p-2">
         <nav class="grid-flow-col gap-4">
             <a target="_blank" href="https://github.com/Narkoleptika/atprofile.com">
-                <IconGithub class="fill-current w-6" />
+                <IconGithub class="fill-current h-6" />
             </a>
             <a target="_blank" href="https://bsky.app/profile/atprofile.com">
-                <IconBsky class="fill-current w-6" />
+                <IconBsky class="fill-current h-6" />
             </a>
         </nav>
     </footer>

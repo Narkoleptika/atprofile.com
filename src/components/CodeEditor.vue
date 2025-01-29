@@ -1,15 +1,3 @@
-<template>
-    <div
-        ref="$editor"
-        class="transition-colors min-h-[250px]"
-        :class="{
-            'bg-neutral-100': !isCodeDark && !isHighContrast,
-            'bg-neutral-900': isCodeDark && !isHighContrast,
-            'bg-neutral-50': !isCodeDark && isHighContrast,
-            'bg-neutral-950': isCodeDark && isHighContrast,
-        }"
-    />
-</template>
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { settings } from '@/stores/settings'
@@ -131,6 +119,18 @@ onUnmounted(() => {
     editor.dispose()
 })
 </script>
+<template>
+    <div
+        ref="$editor"
+        class="transition-colors min-h-[250px]"
+        :class="{
+            'bg-neutral-100': !isCodeDark && !isHighContrast,
+            'bg-neutral-900': isCodeDark && !isHighContrast,
+            'bg-neutral-50': !isCodeDark && isHighContrast,
+            'bg-neutral-950': isCodeDark && isHighContrast,
+        }"
+    />
+</template>
 <style>
 .monaco-editor {
     position: absolute;
