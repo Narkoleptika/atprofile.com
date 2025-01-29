@@ -9,6 +9,11 @@ import IconBsky from '@/components/IconBsky.vue'
 import { UserIcon } from '@heroicons/vue/24/solid'
 import IconAtProfile from '@/components/IconAtProfile.vue'
 import IconGithub from '@/components/IconGithub.vue'
+import { useHead } from '@unhead/vue'
+
+useHead({
+    titleTemplate: (title) => `${title ? `${title} - ` : ''}AT Profile`,
+})
 </script>
 
 <template>

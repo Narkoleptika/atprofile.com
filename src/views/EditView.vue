@@ -8,6 +8,11 @@ import { computed } from 'vue'
 import { TrashIcon, ArrowDownTrayIcon } from '@heroicons/vue/24/solid'
 import { userAtProfile, putAtProfile } from '@/stores/atprofile'
 import AtProfile from '@/models/atprofile'
+import { useHead } from '@unhead/vue'
+
+useHead({
+    title: 'Edit',
+})
 
 const contentModified = computed(() => settings.content && settings.content !== userAtProfile.value.content)
 const replaceTokensModified = computed(() => settings.replaceTokens !== userAtProfile.value.replaceTokens)

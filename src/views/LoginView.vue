@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { login } from '@/stores/auth'
+import { useHead } from '@unhead/vue'
 import { ref } from 'vue'
-
+useHead({
+    title: 'Login',
+})
 const handle = ref('')
 </script>
 <template>

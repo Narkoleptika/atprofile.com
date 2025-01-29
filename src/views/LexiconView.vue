@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import profileLexicon from '@/lexicon/definitions/com.atprofile.beta.profile.json'
+import { useHead } from '@unhead/vue'
+useHead({
+    title: 'Lexicon',
+})
 </script>
 <template>
     <main class="p-2">
