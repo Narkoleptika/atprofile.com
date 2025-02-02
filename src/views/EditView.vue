@@ -100,6 +100,7 @@ const addContext = () => {
             collection: '',
             name: '',
             limit: 50,
+            rkey: '',
         },
     ]
 }
