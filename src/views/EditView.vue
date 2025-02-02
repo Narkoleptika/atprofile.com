@@ -23,7 +23,11 @@ const modified = computed(() => ({
     content: Boolean(settings.content) && settings.content !== userAtProfile.value.content,
     newlinesToLinebreaks: settings.newlinesToLinebreaks !== userAtProfile.value.newlinesToLinebreaks,
     context: (() => {
-        if (settings.context.length !== userAtProfile.value.context.length) {
+        if (!settings.context) {
+            return false
+        }
+
+        if (settings.context?.length !== userAtProfile.value.context.length) {
             return true
         }
 
@@ -57,7 +61,7 @@ const makeComputedField = <Type extends AtProfileField>(field: Type) =>
 
 const content = makeComputedField('content')
 const newlinesToLinebreaks = makeComputedField('newlinesToLinebreaks')
-const context = ref(makeGetter('context').map((item) => ({ id: crypto.randomUUID(), ...item })))
+const context = ref((makeGetter('context') || []).map((item) => ({ id: crypto.randomUUID(), ...item })))
 
 watch(
     context,
