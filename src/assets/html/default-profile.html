@@ -2,10 +2,10 @@
     :root {
         --white: #fafafa;
         --black: #212121;
-        --french-pass: #B8E6FE;
-        --outer-space: #21292E;
-        --orient: #00598A;
-        --twilight-blue: #F8FDFF;
+        --french-pass: #b8e6fe;
+        --outer-space: #21292e;
+        --orient: #00598a;
+        --twilight-blue: #f8fdff;
         --base: var(--white);
         --base-content: var(--black);
         --primary: var(--french-pass);
@@ -22,7 +22,9 @@
         }
     }
 
-    *,*::before,*::after {
+    *,
+    *::before,
+    *::after {
         box-sizing: border-box;
         cursor: none;
     }
@@ -51,7 +53,15 @@
         position: fixed;
         background: var(--cursor);
         border-radius: 100%;
-        box-shadow: 0 0 10px var(--cursor), 0 0 20px var(--cursor), 0 0 30px var(--cursor), 0 0 40px var(--cursor), 0 0 70px var(--cursor), 0 0 80px var(--cursor), 0 0 100px var(--cursor), 0 0 150px var(--cursor);
+        box-shadow:
+            0 0 10px var(--cursor),
+            0 0 20px var(--cursor),
+            0 0 30px var(--cursor),
+            0 0 40px var(--cursor),
+            0 0 70px var(--cursor),
+            0 0 80px var(--cursor),
+            0 0 100px var(--cursor),
+            0 0 150px var(--cursor);
         z-index: 100;
     }
 
@@ -67,21 +77,21 @@
 
         &::after,
         &::before {
-            content:"";
+            content: '';
             position: absolute;
-            background:inherit;
-            border-radius:100%;
+            background: inherit;
+            border-radius: 100%;
             z-index: -1;
         }
 
-        &::after{
+        &::after {
             width: 30%;
             aspect-ratio: 1;
             top: -35%;
             left: 15%;
         }
 
-        &::before{
+        &::before {
             width: 45%;
             aspect-ratio: 1;
             top: -50%;
@@ -89,12 +99,12 @@
         }
 
         @media screen and (min-width: 550px) {
-            &::after{
+            &::after {
                 width: 28%;
                 top: -45%;
             }
 
-            &::before{
+            &::before {
                 width: 45%;
                 top: -75%;
             }
@@ -147,38 +157,60 @@
         }
     }
 </style>
-<div id="cursor"></div>
+
+<div id="app">
+    <div ref="cursor" id="cursor" :style="{top: `${cursorTop}px`, left: `${cursorLeft}px`}"></div>
+    <main>
+        <div id="cloud">
+            <a :href="`https://bsky.app/profile/${profile.did}`" class="content">
+                <img class="avatar" :src="profile.avatar" />
+                <div class="text">
+                    <h1 class="title">
+                        {{ profile.displayName || profile.handle}}
+                        <template v-if="status.length">- {{status[0].status}}</template>
+                    </h1>
+                    <div v-if="profile.description" class="description">{{profile.description}}</div>
+                </div>
+            </a>
+        </div>
+    </main>
+</div>
+
 <script type="module">
-    const cursor = document.querySelector('#cursor')
-    const radius = cursor.offsetHeight / 2
+    import {
+        createApp,
+        ref,
+        useTemplateRef,
+        onMounted,
+        onUnmounted,
+    } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
-    document.addEventListener('mousemove', event => {
-        const top = event.clientY - radius
-        const left = event.clientX - radius
+    const app = createApp({
+        setup() {
+            const cursor = useTemplateRef('cursor')
+            const cursorTop = ref(0)
+            const cursorLeft = ref(0)
 
-        cursor.style = `top: ${top}px; left: ${left}px`
-    })
+            const setPosition = (event) => {
+                const radius = cursor.value?.offsetHeight / 2
+
+                cursorTop.value = event.clientY - radius
+                cursorLeft.value = event.clientX - radius
+            }
+
+            onMounted(() => {
+                document.addEventListener('mousemove', setPosition)
+            })
+
+            onUnmounted(() => {
+                document.removeEventListener('mousemove', setPosition)
+            })
+
+            return {
+                ...window.context,
+                cursorTop,
+                cursorLeft,
+            }
+        },
+    }).mount('#app')
 </script>
-<main>
-    <div id="cloud">
-        <a href="https://bsky.app/profile/{{profile.did}}" class="content">
-            <img class="avatar" src="{{profile.avatar}}">
-            <div class="text">
-                <h1 class="title">
-                    {{if profile.displayName}}
-                        {{profile.displayName}}
-                    {{/if}}
-                    {{unless profile.displayName}}
-                        {{profile.handle}}
-                    {{/unless}}
-                    {{if status.0}}
-                        - {{status.0.status}}
-                    {{/if}}
-                </h1>
-                {{if profile.description}}
-                    <div class="description">{{profile.description}}</div>
-                {{/if}}
-            </div>
-        </a>
-    </div>
-</main>

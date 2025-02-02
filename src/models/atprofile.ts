@@ -5,13 +5,12 @@ import {
     validateContextItem,
 } from '@/lexicon/generated/types/com/atprofile/beta/profile'
 import { makeLexZRecordType, makeLexZType } from '@/types'
-import defaultContent from '@/assets/text/default-profile.txt?raw'
+import defaultContent from '@/assets/html/default-profile.html?raw'
 import { z } from 'zod'
 
 const ContextItem = makeLexZType<ContextItemType>(validateContextItem)
 const BaseAtProfile = makeLexZRecordType<Record>('com.atprofile.beta.profile', validateRecord).transform((value) => ({
     ...value,
-    replaceTokens: typeof value.replaceTokens === 'boolean' ? value.replaceTokens : true,
     newlinesToLinebreaks: typeof value.newlinesToLinebreaks === 'boolean' ? value.newlinesToLinebreaks : false,
     context: (value.context || []).map((item) => ({
         ...item,

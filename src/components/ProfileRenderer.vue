@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onUpdated, ref, toRaw, watch } from 'vue'
+import { computed, nextTick, ref, toRaw, useTemplateRef, watch } from 'vue'
 import AtProfile from '@/models/atprofile'
 import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
 import { getRecord, getRecords } from '@/stores/atproto'
@@ -9,15 +9,14 @@ const props = defineProps<{
     atProfile: AtProfile
 }>()
 
-const $iframe = ref<HTMLIFrameElement>()
+const $iframe = useTemplateRef<HTMLIFrameElement>('$iframe')
 
 const context = computed(() => ({
     profile: toRaw(props.profile),
-    replaceTokens: toRaw(props.atProfile.replaceTokens),
     newlinesToLinebreaks: toRaw(props.atProfile.newlinesToLinebreaks),
 }))
 
-const update = async () => {
+const init = async () => {
     const contextData = await Promise.all(
         props.atProfile.context.map(async (item) => {
             const did = props.profile.did
@@ -45,13 +44,22 @@ const update = async () => {
     )
 }
 
-watch(props, update)
-onUpdated(update)
+const isResetting = ref(false)
+
+const reset = () => {
+    isResetting.value = true
+    nextTick(() => {
+        isResetting.value = false
+    })
+}
+
+watch(props, reset)
 </script>
 <template>
     <iframe
+        v-if="!isResetting"
         ref="$iframe"
-        :onload="update"
+        :onload="init"
         sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
         src="/index-iframe.html"
     ></iframe>

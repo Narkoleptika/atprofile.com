@@ -14,14 +14,13 @@ useHead({
     title: 'Edit',
 })
 
-const atProfileFields = ['content', 'replaceTokens', 'newlinesToLinebreaks', 'context'] as const
+const atProfileFields = ['content', 'newlinesToLinebreaks', 'context'] as const
 const contextItemFields = ['collection', 'name', 'limit', 'rkey'] as const
 
 type AtProfileField = (typeof atProfileFields)[number]
 
 const modified = computed(() => ({
     content: Boolean(settings.content) && settings.content !== userAtProfile.value.content,
-    replaceTokens: settings.replaceTokens !== userAtProfile.value.replaceTokens,
     newlinesToLinebreaks: settings.newlinesToLinebreaks !== userAtProfile.value.newlinesToLinebreaks,
     context: (() => {
         if (settings.context.length !== userAtProfile.value.context.length) {
@@ -57,7 +56,6 @@ const makeComputedField = <Type extends AtProfileField>(field: Type) =>
     })
 
 const content = makeComputedField('content')
-const replaceTokens = makeComputedField('replaceTokens')
 const newlinesToLinebreaks = makeComputedField('newlinesToLinebreaks')
 const context = ref(makeGetter('context').map((item) => ({ id: crypto.randomUUID(), ...item })))
 
@@ -73,7 +71,6 @@ const updatedAtProfile = computed(() => {
     try {
         return AtProfile.parse({
             content: content.value,
-            replaceTokens: replaceTokens.value,
             newlinesToLinebreaks: newlinesToLinebreaks.value,
             // eslint-disable-next-line no-undefined
             context: context.value.map((item) => ({ ...item, id: undefined })),
@@ -88,7 +85,6 @@ const updatedAtProfile = computed(() => {
 
 const reset = () => {
     settings.content = userAtProfile.value.content
-    settings.replaceTokens = userAtProfile.value.replaceTokens
     settings.newlinesToLinebreaks = userAtProfile.value.newlinesToLinebreaks
     settings.context = userAtProfile.value.context
     context.value = userAtProfile.value.context.map((item) => ({ id: crypto.randomUUID(), ...item }))
@@ -148,10 +144,6 @@ const removeContext = (id: string) => {
                             <option value="light-hc">Light High Contrast</option>
                             <option value="dark-hc">Dark High Contrast</option>
                         </select>
-                        <label class="fieldset-label">
-                            <input type="checkbox" v-model="replaceTokens" class="toggle" />
-                            Replace tokens
-                        </label>
                         <label class="fieldset-label">
                             <input type="checkbox" v-model="newlinesToLinebreaks" class="toggle" />
                             Newlines to linebreaks

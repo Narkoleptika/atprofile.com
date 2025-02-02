@@ -14,9 +14,6 @@
                         "minLength": 1,
                         "maxLength": 500000
                     },
-                    "replaceTokens": {
-                        "type": "boolean"
-                    },
                     "newlinesToLinebreaks": {
                         "type": "boolean"
                     },

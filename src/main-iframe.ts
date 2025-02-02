@@ -34,21 +34,6 @@ declare global {
 
 window.context ||= {}
 
-const getContextVal = (key: string) => {
-    const keys = key.split('.')
-    const isRecord = (obj: unknown): obj is Record<string, unknown> => typeof obj === 'object' && obj !== null
-
-    return keys.reduce<unknown>((current, k) => (isRecord(current) ? current[k] : null), window.context)
-}
-
-const replaceTokens = (html: string) =>
-    html
-        .replace(/{{\s*if([^}]+)}}(.*?){{\s*\/if\s*}}/gms, (_substring, g1, g2) => (getContextVal(g1.trim()) ? g2 : ''))
-        .replace(/{{\s*unless([^}]+)}}(.*?){{\s*\/unless\s*}}/gms, (_substring, g1, g2) =>
-            !getContextVal(g1.trim()) ? g2 : '',
-        )
-        .replace(/{{([^}]+)}}/g, (_substring, g1) => String(getContextVal(g1.trim())))
-
 const newlinesToLinebreaks = (html: string) => html.replace(/(?:\r\n|\r|\n)/g, '<br>')
 
 window.addEventListener('message', (event) => {
@@ -68,7 +53,6 @@ window.addEventListener('message', (event) => {
         }
 
         const transforms: Array<[boolean, (html: string) => string]> = [
-            [Boolean(window.context.replaceTokens), replaceTokens],
             [Boolean(window.context.newlinesToLinebreaks), newlinesToLinebreaks],
         ]
 

@@ -11,7 +11,6 @@ try {
 
 const settingsAtProfile = AtProfile.parse({
     content: savedSettings.content || defaultAtProfile.content,
-    replaceTokens: savedSettings.replaceTokens,
     newlinesToLinebreaks: savedSettings.newlinesToLinebreaks,
     context: savedSettings.context || defaultAtProfile.context,
 })
@@ -20,14 +19,12 @@ export const settings = reactive({
     overrideTheme: savedSettings.overrideTheme === true,
     codeTheme: String(savedSettings.codeTheme || ''),
     content: settingsAtProfile.content,
-    replaceTokens: settingsAtProfile.replaceTokens,
     newlinesToLinebreaks: settingsAtProfile.newlinesToLinebreaks,
     context: settingsAtProfile.context,
 })
 
 export const reset = () => {
     settings.content = ''
-    settings.replaceTokens = true
     settings.newlinesToLinebreaks = false
     settings.context = []
 }
