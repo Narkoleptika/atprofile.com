@@ -1,24 +1,16 @@
-import { Agent, AtpAgent } from '@atproto/api'
+import { Agent } from '@atproto/api'
 import { isLoggedIn, oathSession } from '@/stores/auth'
 import { ref, watch } from 'vue'
 import { DidDocument } from '@atproto/oauth-client-browser'
 
-const initAgent = () => {
-    if (oathSession.value) {
-        return new Agent(oathSession.value.session)
-    }
+const initAgent = () => new Agent(oathSession.value?.session || 'https://public.api.bsky.app')
 
-    return new AtpAgent({
-        service: 'https://public.api.bsky.app',
-    })
-}
-
-const didPDSCache: Record<string, string> = {}
+const didPdsCache: Record<string, string> = {}
 const didDocCache: Record<string, DidDocument> = {}
 
 const getPds = async (did: string) => {
-    if (did in didPDSCache) {
-        return didPDSCache[did]
+    if (did in didPdsCache) {
+        return didPdsCache[did]
     }
 
     const response = await fetch(
@@ -35,7 +27,7 @@ const getPds = async (did: string) => {
 
     for (const service of doc.service) {
         if (service.id === '#atproto_pds') {
-            didPDSCache[did] = service.serviceEndpoint.toString()
+            didPdsCache[did] = service.serviceEndpoint.toString()
             didDocCache[did] = doc
 
             return service.serviceEndpoint.toString()
@@ -43,7 +35,7 @@ const getPds = async (did: string) => {
     }
 }
 
-export const agent = ref(await initAgent())
+export const agent = ref(initAgent())
 
 export const getPdsAgent = async (did: string) => {
     const pds = await getPds(did)
@@ -52,9 +44,7 @@ export const getPdsAgent = async (did: string) => {
         return agent.value
     }
 
-    return new AtpAgent({
-        service: pds,
-    })
+    return new Agent(pds)
 }
 
 watch(isLoggedIn, async () => {
