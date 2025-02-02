@@ -11,19 +11,22 @@
         --primary: var(--french-pass);
         --primary-content: var(--outer-space);
         --cursor: var(--white);
-    }
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --base: var(--black);
-            --base-content: var(--white);
-            --primary: var(--orient);
-            --primary-content: var(--twilight-blue);
+
+        @media (prefers-color-scheme: dark) {
+            & {
+                --base: var(--black);
+                --base-content: var(--white);
+                --primary: var(--orient);
+                --primary-content: var(--twilight-blue);
+            }
         }
     }
+
     *,*::before,*::after {
         box-sizing: border-box;
         cursor: none;
     }
+
     body {
         background-color: var(--primary);
         color: var(--primary-content);
@@ -40,6 +43,7 @@
             margin: 0 auto;
         }
     }
+
     #cursor {
         height: 100px;
         width: 100px;
@@ -76,6 +80,7 @@
             top: -35%;
             left: 15%;
         }
+
         &::before{
             width: 45%;
             aspect-ratio: 1;
@@ -88,6 +93,7 @@
                 width: 28%;
                 top: -45%;
             }
+
             &::before{
                 width: 45%;
                 top: -75%;
@@ -130,14 +136,15 @@
                     max-height: 120px;
                 }
             }
+
             .title {
                 margin: 0;
             }
+
             .description {
                 white-space: pre-line;
             }
         }
-
     }
 </style>
 <div id="cursor"></div>

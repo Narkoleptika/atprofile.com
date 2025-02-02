@@ -11,7 +11,7 @@ const cloneScriptNode = (node: HTMLScriptElement) => {
 
     return script
 }
-const replaceScriptNode = (node: Element) => {
+const parseNodes = (node: Element) => {
     if (isScriptNode(node)) {
         node.innerHTML = node.innerHTML.replace(/<br>/g, '')
         node.parentNode?.replaceChild(cloneScriptNode(node), node)
@@ -19,7 +19,7 @@ const replaceScriptNode = (node: Element) => {
         node.innerHTML = node.innerHTML.replace(/<br>/g, '')
     } else {
         Array.from(node.children).forEach((child) => {
-            replaceScriptNode(child)
+            parseNodes(child)
         })
     }
 
@@ -84,6 +84,6 @@ window.addEventListener('message', (event) => {
             a.setAttribute('target', '_blank')
         })
 
-        replaceScriptNode($content)
+        parseNodes($content)
     }
 })

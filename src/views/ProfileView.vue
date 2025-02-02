@@ -59,8 +59,8 @@ onMounted(async () => {
 <template>
     <main class="flex flex-col">
         <ProfileRenderer
-            :key="handle"
             v-if="profile && atProfile"
+            :key="handle"
             :profile="profile"
             :at-profile="atProfile"
             class="flex-1"
