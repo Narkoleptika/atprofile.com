@@ -15,6 +15,7 @@ const BaseAtProfile = makeLexZRecordType<Record>('com.atprofile.beta.profile', v
     context: (value.context || []).map((item) => ({
         ...item,
         limit: item.limit || 50,
+        rkey: item.rkey || '',
     })),
     createdAt: value.createdAt || new Date().toISOString(),
 }))
