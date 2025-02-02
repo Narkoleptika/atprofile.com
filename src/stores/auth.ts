@@ -1,6 +1,7 @@
 import { BrowserOAuthClient, clientMetadataSchema } from '@atproto/oauth-client-browser'
 import clientMetadataJsonUrl from '/client-metadata.json?url'
 import { computed, ref } from 'vue'
+import { reset } from '@/stores/settings'
 
 const clientMetadataJson = await (await fetch(clientMetadataJsonUrl)).json()
 const enc = encodeURIComponent
@@ -44,6 +45,7 @@ export const logout = async () => {
     }
     try {
         await client.revoke(oathSession.value.session.sub)
+        reset()
     } catch (error) {
         console.error(error)
     }

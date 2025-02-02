@@ -25,6 +25,13 @@ export const settings = reactive({
     context: settingsAtProfile.context,
 })
 
+export const reset = () => {
+    settings.content = ''
+    settings.replaceTokens = true
+    settings.newlinesToLinebreaks = false
+    settings.context = []
+}
+
 export default settings
 
 const settingsJson = computed(() => {
