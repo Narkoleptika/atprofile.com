@@ -185,7 +185,7 @@
         onUnmounted,
     } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
-    const app = createApp({
+    createApp({
         setup() {
             const cursor = useTemplateRef('cursor')
             const cursorTop = ref(0)
