@@ -3,6 +3,7 @@ import { computed, nextTick, ref, toRaw, useTemplateRef, watch } from 'vue'
 import AtProfile from '@/models/atprofile'
 import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
 import { getRecord, getRecords } from '@/stores/atproto'
+import { lexToJson } from '@atproto/lexicon'
 
 const props = defineProps<{
     profile: ProfileViewDetailed
@@ -25,7 +26,7 @@ const init = async () => {
                 ? getRecord(did, collection, item.rkey)
                 : getRecords(did, collection, item.limit || 50)
 
-            return [item.name, await data]
+            return [item.name, lexToJson(await data)]
         }),
     )
 

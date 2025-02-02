@@ -1,3 +1,5 @@
+import { jsonToLex } from '@atproto/lexicon'
+
 const isScriptNode = (node: Element): node is HTMLScriptElement => node.tagName === 'SCRIPT'
 const isStyleNode = (node: Element): node is HTMLStyleElement => node.tagName === 'STYLE'
 const cloneScriptNode = (node: HTMLScriptElement) => {
@@ -42,7 +44,13 @@ window.addEventListener('message', (event) => {
     }
 
     if (event.data.payload?.context) {
-        window.context = event.data.payload.context
+        const context = event.data.payload?.context
+
+        for (const prop in context) {
+            if (context.hasOwnProperty(prop)) {
+                window.context[prop] = jsonToLex(context[prop])
+            }
+        }
     }
 
     if (event.data.payload?.content) {
