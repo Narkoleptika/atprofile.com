@@ -57,10 +57,7 @@ window.addEventListener('message', (event) => {
     }
 
     if (event.data.payload?.context) {
-        window.context = {
-            ...window.context,
-            ...event.data.payload.context,
-        }
+        window.context = event.data.payload.context
     }
 
     if (event.data.payload?.content) {

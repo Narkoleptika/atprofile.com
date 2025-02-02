@@ -2,6 +2,7 @@
 import { computed, onUpdated, ref, toRaw, watch } from 'vue'
 import AtProfile from '@/models/atprofile'
 import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
+import { getRecord, getRecords } from '@/stores/atproto'
 
 const props = defineProps<{
     profile: ProfileViewDetailed
@@ -16,12 +17,27 @@ const context = computed(() => ({
     newlinesToLinebreaks: toRaw(props.atProfile.newlinesToLinebreaks),
 }))
 
-const update = () => {
+const update = async () => {
+    const contextData = await Promise.all(
+        props.atProfile.context.map(async (item) => {
+            const did = props.profile.did
+            const collection = item.collection
+            const data = item.rkey
+                ? getRecord(did, collection, item.rkey)
+                : getRecords(did, collection, item.limit || 50)
+
+            return [item.name, await data]
+        }),
+    )
+
     $iframe.value?.contentWindow?.postMessage(
         {
             action: 'setContent',
             payload: {
-                context: toRaw(context.value),
+                context: toRaw({
+                    ...Object.fromEntries(contextData),
+                    ...context.value,
+                }),
                 content: toRaw(props.atProfile.content),
             },
         },

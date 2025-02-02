@@ -1,12 +1,7 @@
-import AtProfile from '@/models/atprofile'
+import AtProfile, { defaultAtProfile } from '@/models/atprofile'
 import { agent, getPdsAgent } from '@/stores/agent'
 import { ref, watch } from 'vue'
-import defaultContent from '@/assets/text/default-profile.txt?raw'
 import { isLoggedIn, oathSession } from '@/stores/auth'
-
-const defaultAtProfile = AtProfile.parse({
-    content: defaultContent,
-})
 
 export const getAtProfile = async (did: string) => {
     try {

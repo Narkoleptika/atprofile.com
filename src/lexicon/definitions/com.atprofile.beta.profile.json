@@ -20,10 +20,35 @@
                     "newlinesToLinebreaks": {
                         "type": "boolean"
                     },
+                    "context": {
+                        "type": "array",
+                        "items": { "type": "ref", "ref": "#contextItem" }
+                    },
                     "createdAt": {
                         "type": "string",
                         "format": "datetime"
                     }
+                }
+            }
+        },
+        "contextItem": {
+            "type": "object",
+            "required": ["collection", "name"],
+            "properties": {
+                "collection": {
+                    "type": "string",
+                    "format": "nsid"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                },
+                "rkey": {
+                    "type": "string"
                 }
             }
         }

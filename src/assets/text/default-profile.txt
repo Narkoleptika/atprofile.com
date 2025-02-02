@@ -164,6 +164,9 @@
                     {{unless profile.displayName}}
                         {{profile.handle}}
                     {{/unless}}
+                    {{if status.0}}
+                        - {{status.0.status}}
+                    {{/if}}
                 </h1>
                 {{if profile.description}}
                     <div class="description">{{profile.description}}</div>

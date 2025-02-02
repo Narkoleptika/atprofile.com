@@ -1,3 +1,4 @@
+import AtProfile, { defaultAtProfile } from '@/models/atprofile'
 import { computed, reactive, watch } from 'vue'
 
 let savedSettings: Record<string, unknown> = {}
@@ -8,12 +9,20 @@ try {
     console.error(error)
 }
 
+const settingsAtProfile = AtProfile.parse({
+    content: savedSettings.content || defaultAtProfile.content,
+    replaceTokens: savedSettings.replaceTokens,
+    newlinesToLinebreaks: savedSettings.newlinesToLinebreaks,
+    context: savedSettings.context || defaultAtProfile.context,
+})
+
 export const settings = reactive({
     overrideTheme: savedSettings.overrideTheme === true,
     codeTheme: String(savedSettings.codeTheme || ''),
-    content: String(savedSettings.content || ''),
-    replaceTokens: savedSettings.replaceTokens !== false,
-    newlinesToLinebreaks: savedSettings.newlinesToLinebreaks === true,
+    content: settingsAtProfile.content,
+    replaceTokens: settingsAtProfile.replaceTokens,
+    newlinesToLinebreaks: settingsAtProfile.newlinesToLinebreaks,
+    context: settingsAtProfile.context,
 })
 
 export default settings
