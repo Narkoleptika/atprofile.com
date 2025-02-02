@@ -13,10 +13,10 @@ const cloneScriptNode = (node: HTMLScriptElement) => {
 }
 const parseNodes = (node: Element) => {
     if (isScriptNode(node)) {
-        node.innerHTML = node.innerHTML.replace(/<br>/g, '')
+        node.innerHTML = node.innerHTML.replace(/<br>/g, '\n')
         node.parentNode?.replaceChild(cloneScriptNode(node), node)
     } else if (isStyleNode(node)) {
-        node.innerHTML = node.innerHTML.replace(/<br>/g, '')
+        node.innerHTML = node.innerHTML.replace(/<br>/g, '\n')
     } else {
         Array.from(node.children).forEach((child) => {
             parseNodes(child)
