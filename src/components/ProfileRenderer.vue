@@ -2,8 +2,7 @@
 import { computed, nextTick, ref, toRaw, useTemplateRef, watch } from 'vue'
 import AtProfile from '@/models/atprofile'
 import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
-import { getRecord, getRecords } from '@/stores/atproto'
-import { lexToJson } from '@atproto/lexicon'
+import { getPds } from '@/stores/agent'
 
 const props = defineProps<{
     profile: ProfileViewDetailed
@@ -14,29 +13,18 @@ const $iframe = useTemplateRef<HTMLIFrameElement>('$iframe')
 
 const context = computed(() => ({
     profile: toRaw(props.profile),
+    contextItems: toRaw(props.atProfile.context),
     newlinesToLinebreaks: toRaw(props.atProfile.newlinesToLinebreaks),
 }))
 
 const init = async () => {
-    const contextData = await Promise.all(
-        props.atProfile.context.map(async (item) => {
-            const did = props.profile.did
-            const collection = item.collection
-            const data = item.rkey
-                ? getRecord(did, collection, item.rkey)
-                : getRecords(did, collection, item.limit || 50)
-
-            return [item.name, lexToJson(await data)]
-        }),
-    )
-
     $iframe.value?.contentWindow?.postMessage(
         {
             action: 'setContent',
             payload: {
                 context: toRaw({
-                    ...Object.fromEntries(contextData),
                     ...context.value,
+                    pds: await getPds(props.profile.did),
                 }),
                 content: toRaw(props.atProfile.content),
             },

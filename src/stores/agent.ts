@@ -8,7 +8,7 @@ const initAgent = () => new Agent(oathSession.value?.session || 'https://public.
 const didPdsCache: Record<string, string> = {}
 const didDocCache: Record<string, DidDocument> = {}
 
-const getPds = async (did: string) => {
+export const getPds = async (did: string) => {
     if (did in didPdsCache) {
         return didPdsCache[did]
     }
