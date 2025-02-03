@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, toRaw, useTemplateRef, watch } from 'vue'
 import AtProfile from '@/models/atprofile'
-import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
+import type { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
 import { getPds } from '@/stores/agent'
 
 const props = defineProps<{

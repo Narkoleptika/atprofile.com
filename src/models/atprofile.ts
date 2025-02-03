@@ -1,7 +1,7 @@
 import {
-    Record,
+    type Record,
     validateRecord,
-    ContextItem as ContextItemType,
+    type ContextItem as ContextItemType,
     validateContextItem,
 } from '@/lexicon/generated/types/com/atprofile/beta/profile'
 import { makeLexZRecordType, makeLexZType } from '@/types'

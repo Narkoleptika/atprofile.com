@@ -1,7 +1,7 @@
 import { Agent } from '@atproto/api'
 import { isLoggedIn, oathSession } from '@/stores/auth'
 import { ref, watch } from 'vue'
-import { DidDocument } from '@atproto/oauth-client-browser'
+import type { DidDocument } from '@atproto/oauth-client-browser'
 
 const initAgent = () => new Agent(oathSession.value?.session || 'https://public.api.bsky.app')
 
