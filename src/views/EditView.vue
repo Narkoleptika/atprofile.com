@@ -59,7 +59,23 @@ const makeComputedField = <Type extends AtProfileField>(field: Type) =>
         },
     })
 
-const content = makeComputedField('content')
+const debounce = <Type extends (...args: Parameters<Type>) => ReturnType<Type>>(func: Type, timeout = 300) => {
+    let timer: number
+
+    return (...args: Parameters<Type>) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            func(...args)
+        }, timeout)
+    }
+}
+
+const content = computed({
+    get: () => makeGetter('content'),
+    set: debounce((value: string) => {
+        settings.content = value
+    }, 500),
+})
 const newlinesToLinebreaks = makeComputedField('newlinesToLinebreaks')
 const context = ref((makeGetter('context') || []).map((item) => ({ id: crypto.randomUUID(), ...item })))
 
