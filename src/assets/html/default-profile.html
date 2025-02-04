@@ -167,7 +167,7 @@
                 <div class="text">
                     <h1 class="title">
                         {{ profile.displayName || profile.handle}}
-                        <template v-if="status.length">- {{status[0].status}}</template>
+                        <template v-if="status.length">- {{status[0].value.status}}</template>
                     </h1>
                     <div v-if="profile.description" class="description">{{profile.description}}</div>
                 </div>

@@ -61,7 +61,7 @@ const handleContext = async (context: Context) => {
             ...options,
         })
 
-        return data.value
+        return data
     }
 
     const getRecords = async (options: Omit<atprotoApi.ComAtprotoRepoListRecords.QueryParams, 'repo'>) => {
@@ -70,7 +70,7 @@ const handleContext = async (context: Context) => {
             ...options,
         })
 
-        return data.records.map(({ value }) => value)
+        return data.records
     }
 
     window.context.getRecord = getRecord
