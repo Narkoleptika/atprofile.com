@@ -74,7 +74,7 @@ const content = computed({
     get: () => makeGetter('content'),
     set: debounce((value: string) => {
         settings.content = value
-    }, 500),
+    }, 2000),
 })
 const newlinesToLinebreaks = makeComputedField('newlinesToLinebreaks')
 const context = ref((makeGetter('context') || []).map((item) => ({ id: crypto.randomUUID(), ...item })))
@@ -169,6 +169,7 @@ const removeContext = (id: string) => {
                             <input type="checkbox" v-model="newlinesToLinebreaks" class="toggle" />
                             Newlines to linebreaks
                         </label>
+                        <legend class="fieldset-legend">Context</legend>
                         <template v-for="contextItem in context" :key="contextItem.id">
                             <label for="fetch-data-collection-input" class="fieldset-label">Collection</label>
                             <div class="flex">
