@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/logo.svg" sizes="any" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="
+                default-src 'self';
+                connect-src 'self' https://bsky.social https://public.api.bsky.app https://plc.directory https://*.bsky.network;
+                style-src 'self';
+                img-src 'self' data: https://cdn.bsky.app;
+                frame-src %VITE_APP_IFRAME_URL%;
+            "
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>AT Profile</title>
         <meta name="description" content="Custom profiles built on top of AT Protocol" />
