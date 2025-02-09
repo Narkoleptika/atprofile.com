@@ -10,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const $iframe = useTemplateRef<HTMLIFrameElement>('$iframe')
+const url = import.meta.env.VITE_APP_IFRAME_URL
 
 const context = computed(() => ({
     profile: toRaw(props.profile),
@@ -49,7 +50,7 @@ watch(props, reset)
         v-if="!isResetting"
         ref="$iframe"
         :onload="init"
-        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-        src="/index-iframe.html"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        :src="url"
     ></iframe>
 </template>
