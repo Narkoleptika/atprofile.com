@@ -1,216 +1,216 @@
 <style>
-    :root {
-        --white: #fafafa;
-        --black: #212121;
-        --french-pass: #b8e6fe;
-        --outer-space: #21292e;
-        --orient: #00598a;
-        --twilight-blue: #f8fdff;
-        --base: var(--white);
-        --base-content: var(--black);
-        --primary: var(--french-pass);
-        --primary-content: var(--outer-space);
-        --cursor: var(--white);
+  :root {
+    --white: #fafafa;
+    --black: #212121;
+    --french-pass: #b8e6fe;
+    --outer-space: #21292e;
+    --orient: #00598a;
+    --twilight-blue: #f8fdff;
+    --base: var(--white);
+    --base-content: var(--black);
+    --primary: var(--french-pass);
+    --primary-content: var(--outer-space);
+    --cursor: var(--white);
 
-        @media (prefers-color-scheme: dark) {
-            & {
-                --base: var(--black);
-                --base-content: var(--white);
-                --primary: var(--orient);
-                --primary-content: var(--twilight-blue);
-            }
-        }
+    @media (prefers-color-scheme: dark) {
+      & {
+        --base: var(--black);
+        --base-content: var(--white);
+        --primary: var(--orient);
+        --primary-content: var(--twilight-blue);
+      }
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    cursor: none;
+  }
+
+  body {
+    background-color: var(--primary);
+    color: var(--primary-content);
+    margin: 0;
+  }
+
+  main {
+    display: grid;
+    place-items: center;
+    min-height: 100dvh;
+    margin: 0 1rem;
+
+    @media screen and (min-width: calc(600px + 2rem + 1px)) {
+      margin: 0 auto;
+    }
+  }
+
+  #cursor {
+    height: 100px;
+    width: 100px;
+    pointer-events: none;
+    position: fixed;
+    background: var(--cursor);
+    border-radius: 100%;
+    box-shadow:
+      0 0 10px var(--cursor),
+      0 0 20px var(--cursor),
+      0 0 30px var(--cursor),
+      0 0 40px var(--cursor),
+      0 0 70px var(--cursor),
+      0 0 80px var(--cursor),
+      0 0 100px var(--cursor),
+      0 0 150px var(--cursor);
+    z-index: 100;
+  }
+
+  #cloud {
+    position: relative;
+    background-color: var(--white);
+    color: var(--black);
+    width: 100%;
+    max-width: 600px;
+    border-radius: 100px;
+    padding: 25px 50px;
+    box-shadow: 10px 10px color-mix(in srgb, var(--black), transparent 80%);
+
+    &::after,
+    &::before {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 100%;
+      z-index: -1;
     }
 
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-        cursor: none;
+    &::after {
+      width: 30%;
+      aspect-ratio: 1;
+      top: -35%;
+      left: 15%;
     }
 
-    body {
-        background-color: var(--primary);
-        color: var(--primary-content);
-        margin: 0;
+    &::before {
+      width: 45%;
+      aspect-ratio: 1;
+      top: -50%;
+      left: 40%;
     }
 
-    main {
-        display: grid;
-        place-items: center;
-        min-height: 100dvh;
-        margin: 0 1rem;
+    @media screen and (min-width: 550px) {
+      &::after {
+        width: 28%;
+        top: -45%;
+      }
 
-        @media screen and (min-width: calc(600px + 2rem + 1px)) {
-            margin: 0 auto;
-        }
+      &::before {
+        width: 45%;
+        top: -75%;
+      }
     }
 
-    #cursor {
-        height: 100px;
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.5rem 0;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 250ms;
+
+      .avatar {
         width: 100px;
-        pointer-events: none;
-        position: fixed;
-        background: var(--cursor);
+        height: auto;
+        display: block;
         border-radius: 100%;
-        box-shadow:
-            0 0 10px var(--cursor),
-            0 0 20px var(--cursor),
-            0 0 30px var(--cursor),
-            0 0 40px var(--cursor),
-            0 0 70px var(--cursor),
-            0 0 80px var(--cursor),
-            0 0 100px var(--cursor),
-            0 0 150px var(--cursor);
-        z-index: 100;
+        border: 5px solid transparent;
+        margin-right: 1rem;
+        transition: border-color 250ms;
+      }
+
+      &:hover {
+        color: var(--primary);
+
+        .avatar {
+          border-color: var(--primary);
+        }
+      }
+
+      .text {
+        flex: 1;
+        max-height: 100px;
+        overflow: auto;
+
+        @media screen and (min-width: 768px) {
+          max-height: 120px;
+        }
+      }
+
+      .title {
+        margin: 0;
+      }
+
+      .description {
+        white-space: pre-line;
+      }
     }
-
-    #cloud {
-        position: relative;
-        background-color: var(--white);
-        color: var(--black);
-        width: 100%;
-        max-width: 600px;
-        border-radius: 100px;
-        padding: 25px 50px;
-        box-shadow: 10px 10px color-mix(in srgb, var(--black), transparent 80%);
-
-        &::after,
-        &::before {
-            content: '';
-            position: absolute;
-            background: inherit;
-            border-radius: 100%;
-            z-index: -1;
-        }
-
-        &::after {
-            width: 30%;
-            aspect-ratio: 1;
-            top: -35%;
-            left: 15%;
-        }
-
-        &::before {
-            width: 45%;
-            aspect-ratio: 1;
-            top: -50%;
-            left: 40%;
-        }
-
-        @media screen and (min-width: 550px) {
-            &::after {
-                width: 28%;
-                top: -45%;
-            }
-
-            &::before {
-                width: 45%;
-                top: -75%;
-            }
-        }
-
-        .content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0.5rem 0;
-            color: var(--black);
-            text-decoration: none;
-            transition: color 250ms;
-
-            .avatar {
-                width: 100px;
-                height: auto;
-                display: block;
-                border-radius: 100%;
-                border: 5px solid transparent;
-                margin-right: 1rem;
-                transition: border-color 250ms;
-            }
-
-            &:hover {
-                color: var(--primary);
-
-                .avatar {
-                    border-color: var(--primary);
-                }
-            }
-
-            .text {
-                flex: 1;
-                max-height: 100px;
-                overflow: auto;
-
-                @media screen and (min-width: 768px) {
-                    max-height: 120px;
-                }
-            }
-
-            .title {
-                margin: 0;
-            }
-
-            .description {
-                white-space: pre-line;
-            }
-        }
-    }
+  }
 </style>
 
 <div id="app">
-    <div ref="cursor" id="cursor" :style="{top: `${cursorTop}px`, left: `${cursorLeft}px`}"></div>
-    <main>
-        <div id="cloud">
-            <a :href="`https://bsky.app/profile/${profile.did}`" class="content">
-                <img class="avatar" :src="profile.avatar" />
-                <div class="text">
-                    <h1 class="title">
-                        {{ profile.displayName || profile.handle}}
-                        <template v-if="status.length">- {{status[0].value.status}}</template>
-                    </h1>
-                    <div v-if="profile.description" class="description">{{profile.description}}</div>
-                </div>
-            </a>
+  <div ref="cursor" id="cursor" :style="{top: `${cursorTop}px`, left: `${cursorLeft}px`}"></div>
+  <main>
+    <div id="cloud">
+      <a :href="`https://bsky.app/profile/${profile.did}`" class="content">
+        <img class="avatar" :src="profile.avatar" />
+        <div class="text">
+          <h1 class="title">
+            {{ profile.displayName || profile.handle}}
+            <template v-if="status.length">- {{status[0].value.status}}</template>
+          </h1>
+          <div v-if="profile.description" class="description">{{profile.description}}</div>
         </div>
-    </main>
+      </a>
+    </div>
+  </main>
 </div>
 
 <script type="module">
-    import {
-        createApp,
-        ref,
-        useTemplateRef,
-        onMounted,
-        onUnmounted,
-    } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+  import {
+    createApp,
+    ref,
+    useTemplateRef,
+    onMounted,
+    onUnmounted,
+  } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
-    createApp({
-        setup() {
-            const cursor = useTemplateRef('cursor')
-            const cursorTop = ref(0)
-            const cursorLeft = ref(0)
+  createApp({
+    setup() {
+      const cursor = useTemplateRef('cursor')
+      const cursorTop = ref(0)
+      const cursorLeft = ref(0)
 
-            const setPosition = (event) => {
-                const radius = cursor.value?.offsetHeight / 2
+      const setPosition = (event) => {
+        const radius = cursor.value?.offsetHeight / 2
 
-                cursorTop.value = event.clientY - radius
-                cursorLeft.value = event.clientX - radius
-            }
+        cursorTop.value = event.clientY - radius
+        cursorLeft.value = event.clientX - radius
+      }
 
-            onMounted(() => {
-                document.addEventListener('mousemove', setPosition)
-            })
+      onMounted(() => {
+        document.addEventListener('mousemove', setPosition)
+      })
 
-            onUnmounted(() => {
-                document.removeEventListener('mousemove', setPosition)
-            })
+      onUnmounted(() => {
+        document.removeEventListener('mousemove', setPosition)
+      })
 
-            return {
-                ...window.context,
-                cursorTop,
-                cursorLeft,
-            }
-        },
-    }).mount('#app')
+      return {
+        ...window.context,
+        cursorTop,
+        cursorLeft,
+      }
+    },
+  }).mount('#app')
 </script>
