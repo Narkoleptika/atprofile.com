@@ -5,22 +5,8 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
-    plugins: [
-        vue(),
-        vueDevTools(),
-        tailwindcss(),
-        {
-            name: 'dev-unsafe-inline-style',
-            transformIndexHtml(html) {
-                if (mode === 'production') {
-                    return
-                }
-
-                return html.replace(/style-src([^;]+);/m, "style-src$1 'unsafe-inline';")
-            },
-        },
-    ],
+export default defineConfig({
+    plugins: [vue(), vueDevTools(), tailwindcss()],
     server: {
         host: '0.0.0.0',
         cors: true,
@@ -33,4 +19,4 @@ export default defineConfig(({ mode }) => ({
             '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
     },
-}))
+})

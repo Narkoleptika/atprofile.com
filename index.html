@@ -10,7 +10,7 @@
             content="
                 default-src 'self';
                 connect-src 'self' https://bsky.social https://public.api.bsky.app https://plc.directory https://*.bsky.network;
-                style-src 'self';
+                style-src 'self' 'unsafe-inline';
                 img-src 'self' data: https://cdn.bsky.app;
                 frame-src %VITE_APP_IFRAME_URL%;
             "
