@@ -2,6 +2,8 @@
 import HandleSearch from '@/components/HandleSearch.vue'
 import IconAtProfile from '@/components/IconAtProfile.vue'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/solid'
+import { isLoggedIn } from '@/stores/auth'
+import { RouterLink } from 'vue-router'
 </script>
 <template>
     <main class="p-2">
@@ -19,6 +21,8 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/solid'
             <h2 class="mt-0">Custom profiles built on top of AT Protocol</h2>
             <p>Search for a bluesky handle to see their AT Profile</p>
             <HandleSearch />
+            <p v-if="isLoggedIn">Or <RouterLink to="/edit">edit</RouterLink> your own profile!</p>
+            <p v-else>Or <RouterLink to="/login">login</RouterLink> to edit your own profile!</p>
         </div>
     </main>
 </template>
