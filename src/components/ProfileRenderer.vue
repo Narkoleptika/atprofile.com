@@ -51,6 +51,7 @@ watch(props, reset)
         ref="$iframe"
         :onload="init"
         sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        allow="clipboard-write"
         :src="url"
     ></iframe>
 </template>
