@@ -2,6 +2,10 @@
 
 Custom profiles built on top of AT Protocol
 
+## Dependencies
+
+- [Iframe Repo](https://github.com/Narkoleptika/atprfl.com)
+
 ## Project Setup
 
 ```sh
