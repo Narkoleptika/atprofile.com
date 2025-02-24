@@ -1,9 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { isLoggedIn } from '@/stores/auth'
+import { isValidHandle } from '@atproto/syntax'
 
 const router = createRouter({
-    history: createWebHashHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
@@ -46,6 +47,16 @@ const router = createRouter({
             component: () => import('@/views/NotFoundView.vue'),
         },
     ],
+})
+
+router.beforeEach((to) => {
+    // Redirect old hash history profile links
+    // eg atprofile.com/#/atprofile.com -> atprofile.com/atprofile.com
+    const hash = to.hash.replace(/^#\/?(.*)/, '$1')
+
+    if (isValidHandle(hash)) {
+        return `/${hash}`
+    }
 })
 
 export default router
