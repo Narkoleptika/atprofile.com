@@ -23,6 +23,7 @@ const handle = computed(() => {
 
 const profile = ref<ProfileViewDetailed>()
 const atProfile = ref<AtProfile>()
+const did = ref('')
 
 useHead({
     title: () =>
@@ -33,8 +34,16 @@ useHead({
 
 const fetchProfile = async () => {
     try {
-        const did = await resolveHandle(handle.value)
-        const [prof, atprof] = await Promise.all([getProfile(did), getAtProfile(did)])
+        const [prof, atprof] = await Promise.all([getProfile(did.value), getAtProfile(did.value)])
+
+        if (did.value === handle.value) {
+            router.replace({
+                name: 'profile',
+                params: {
+                    handle: prof.handle,
+                },
+            })
+        }
 
         profile.value = prof
         atProfile.value = atprof
@@ -49,12 +58,13 @@ const fetchProfile = async () => {
     }
 }
 
-watch(handle, async () => {
-    await fetchProfile()
-})
-onMounted(async () => {
-    await fetchProfile()
-})
+const resolveDid = async () => {
+    did.value = /^did:/.test(handle.value) ? handle.value : await resolveHandle(handle.value)
+}
+
+watch(did, fetchProfile)
+watch(handle, resolveDid)
+onMounted(resolveDid)
 </script>
 <template>
     <main class="flex flex-col">
