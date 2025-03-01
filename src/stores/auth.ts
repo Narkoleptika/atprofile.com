@@ -21,8 +21,15 @@ const client = new BrowserOAuthClient({
         /* eslint-enable camelcase */
     },
 })
+const initClient = async () => {
+    try {
+        return await client.init()
+    } catch (error) {
+        console.error(error)
+    }
+}
 
-export const oathSession = ref(await client.init())
+export const oathSession = ref(await initClient())
 
 client.addEventListener('deleted', () => {
     // eslint-disable-next-line no-undefined
