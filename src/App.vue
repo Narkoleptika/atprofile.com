@@ -52,6 +52,11 @@ useHead({
                 </li>
                 <li v-if="!isLoggedIn"><RouterLink to="/login">Login</RouterLink></li>
                 <li><RouterLink active-class="menu-active" :to="{ name: 'lexicon' }">Lexicon</RouterLink></li>
+                <li>
+                    <RouterLink active-class="menu-active" :to="{ name: 'acknowledgements' }">
+                        Acknowledgements
+                    </RouterLink>
+                </li>
                 <li><ThemeOverride v-model="settings.overrideTheme" /></li>
                 <li v-if="isLoggedIn"><RouterLink to="/" @click="logout">Logout</RouterLink></li>
             </ul>
@@ -66,7 +71,6 @@ useHead({
             <a target="_blank" href="https://bsky.app/profile/atprofile.com">
                 <IconBsky class="fill-current h-6" />
             </a>
-            <a target="_blank" href="/acknowledgements.html" class="ml-auto">Acknowledgements</a>
         </nav>
     </footer>
 </template>

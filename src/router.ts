@@ -32,6 +32,11 @@ const router = createRouter({
             component: () => import('@/views/LexiconView.vue'),
         },
         {
+            path: '/acknowledgements',
+            name: 'acknowledgements',
+            component: () => import('@/views/LicenseView.vue'),
+        },
+        {
             path: '/login',
             name: 'login',
             component: () => import('@/views/LoginView.vue'),
