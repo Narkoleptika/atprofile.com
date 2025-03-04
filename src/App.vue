@@ -66,6 +66,7 @@ useHead({
             <a target="_blank" href="https://bsky.app/profile/atprofile.com">
                 <IconBsky class="fill-current h-6" />
             </a>
+            <a target="_blank" href="/acknowledgements.html" class="ml-auto">Acknowledgements</a>
         </nav>
     </footer>
 </template>
