@@ -25,7 +25,18 @@ onBeforeMount(async () => {
     licenses.value = []
 
     try {
-        licenses.value = await (await fetch('/oss-licenses.json')).json()
+        const response = await fetch('/oss-licenses.json')
+        const json: Array<(typeof licenses.value)[number]> = await response.json()
+        const seenPkgs: Array<string> = []
+
+        licenses.value = json.filter((license) => {
+            const seenPgk = seenPkgs.includes(license.name)
+
+            seenPkgs.push(license.name)
+
+            return !seenPgk
+        })
+        licenses.value.sort((a, b) => a.name.localeCompare(b.name))
     } catch (error) {
         console.error(error)
     }
